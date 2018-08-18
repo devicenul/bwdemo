@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bandwidth: Tiny Demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Result:</h1>
+<p>Sending SMS message to Rich from...<br></p>
+<p th:text="'Your DN: ' + ${demoform.sourceDN}" />
+<p th:text="'Custom Message: ' + ${demoform.customMessage}" />
+<br><br>
+<a href="/bandwidth/demo">Try again?</a>
+</body>
+</html>

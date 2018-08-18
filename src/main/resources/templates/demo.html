@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bandwidth: Tiny Demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Send a canned SMS message to Rich</h1>
+<form action="#" th:action="@{/bandwidth/demo/sendSMS}" th:object="${demoform}" method="post">
+    <p>Your phone number: <input type="text" th:field="*{sourceDN}" /></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+<h1>Send a custom SMS message to Rich</h1>
+<form action="#" th:action="@{/bandwidth/demo/sendSMS}" th:object="${demoform}" method="post">
+    <p>Your phone number: <input type="text" th:field="*{sourceDN}" /></p>
+    <p>Message: <input type="text" th:field="*{customMessage}" /></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+<h1>Call Rich</h1>
+<form action="#" th:action="@{/bandwidth/demo/makeCall}" th:object="${demoform}" method="post">
+    <p>Your phone number: <input type="text" th:field="*{sourceDN}" /></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+</body>
+</html>
