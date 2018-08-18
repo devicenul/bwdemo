@@ -59,7 +59,12 @@
 			<artifactId>swagger-annotations</artifactId>
 			<version>1.5.21</version>
 		</dependency>
-
+		<!-- https://mvnrepository.com/artifact/io.fabric8/docker-maven-plugin -->
+		<dependency>
+			<groupId>io.fabric8</groupId>
+			<artifactId>docker-maven-plugin</artifactId>
+			<version>0.14.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -71,5 +76,40 @@
 		</plugins>
 	</build>
 
+	<profiles>
+		<profile>
+			<id>docker</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>io.fabric8</groupId>
+						<artifactId>docker-maven-plugin</artifactId>
+						<version>0.14.1</version>
+						<configuration>
+							<images>
+								<!-- A single's image configuration -->
+								<image>
+									<name>mercnet/bandwidthDemo</name>
+									<build>
+										<dockerFile>Dockerfile</dockerFile>
+										<dockerFileDir>${project.basedir}/src/main/docker/</dockerFileDir>
+										<assembly>
+											<descriptorRef>artifact-with-dependencies</descriptorRef>
+										</assembly>
+										<tags>
+											<tag>latest</tag>
+											<tag>8</tag>
+											<!--<tag>${java-rpm-tag.version}</tag>-->
+											<!--<tag>${maven.rpm.version}-${docker.build.tag}</tag>-->
+										</tags>
+									</build>
+								</image>
+							</images>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 </project>
