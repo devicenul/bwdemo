@@ -14,7 +14,7 @@ public class DemoController {
 
     private final static String THANK_YOU = "Thank you!";
     private final static String THANK_YOU_FOR_MESSAGE = "Thank you for your message!";
-    private final static String THANK_YOU_FOR_CALLING = "Thank you for calling! Trying now.";
+    private final static String THANK_YOU_FOR_CALLING = "Thank you for calling! Trying now...";
 
     public DemoController() {
         LOG.info("Instantiated");
