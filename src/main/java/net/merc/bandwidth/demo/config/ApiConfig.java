@@ -7,11 +7,11 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @PropertySource("classpath:application.properties")
 public class ApiConfig implements IApiConfig {
-    @Value("bandwidth.apiKey")
+    @Value("${bandwidth.apiKey}")
     private String apiKey;
-    @Value("bandwidth.apiUser")
+    @Value("${bandwidth.apiUser}")
     private String apiUser;
-    @Value("bandwidth.apiSecret")
+    @Value("${bandwidth.apiSecret}")
     private String apiSecret;
 
     @Override

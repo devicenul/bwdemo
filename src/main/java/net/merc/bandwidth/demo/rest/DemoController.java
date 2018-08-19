@@ -19,7 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class DemoController {
     private final static Logger LOG = LoggerFactory.getLogger(DemoController.class);
 
-    private final static String CANNED_MESSAGE = "Someone with this number tried the demo.";
+    private final static String CANNED_MESSAGE = "%s: Someone with this number tried the demo.";
+    private final static String CUSTOM_MESSAGE = "%s: %s";
 
     private final static PhoneNumberUtil PHONE_UTIL = PhoneNumberUtil.getInstance();
     private final static String REGION_CODE = PhoneNumberUtil.getInstance().getRegionCodeForCountryCode(1);
@@ -44,17 +45,25 @@ public class DemoController {
     @PostMapping("/bandwidth/demo/sendSMS")
     public String sendSms(@ModelAttribute DemoForm demoform, Model model) {
         LOG.info("Got sourceDN: {}, customMessage: '{}'", demoform.getSourceDN(), demoform.getCustomMessage());
-        if (demoform.getCustomMessage() == null || demoform.getCustomMessage().isEmpty()) {
-            demoform.setCustomMessage(CANNED_MESSAGE);
-        }
-
-        model.addAttribute("demoform", demoform);
 
         if (!validDN(demoform.getSourceDN())) {
             return "resultBadDN";
         }
 
         demoform.setSourceDN(normalizeDN(demoform.getSourceDN()));
+
+        if (demoform.getCustomMessage() == null || demoform.getCustomMessage().isEmpty()) {
+            demoform.setCustomMessage(String.format(CANNED_MESSAGE, demoform.getSourceDN()));
+        } else {
+            demoform.setCustomMessage(String.format(CUSTOM_MESSAGE, demoform.getSourceDN(), demoform.getCustomMessage()));
+        }
+
+        model.addAttribute("demoform", demoform);
+
+        if (!bwClient.submitSmsMessage(demoform.getCustomMessage())) {
+            LOG.error("Unable to submit to bwClient, message: {}", demoform.getCustomMessage());
+            return "resultBadApi";
+        }
 
         return "resultSMS";
     }
@@ -70,6 +79,11 @@ public class DemoController {
         }
 
         demoform.setSourceDN(normalizeDN(demoform.getSourceDN()));
+
+        if (!bwClient.submitCall(demoform.getSourceDN())) {
+            LOG.error("Unable to submit to bwClient, call: {}", demoform.getSourceDN());
+            return "resultBadApi";
+        }
 
         return "resultCalling";
     }

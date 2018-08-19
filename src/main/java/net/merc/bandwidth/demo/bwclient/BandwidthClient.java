@@ -1,12 +1,12 @@
 package net.merc.bandwidth.demo.bwclient;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.ImmutableSet;
 import net.merc.bandwidth.demo.config.IApiConfig;
 import net.merc.bandwidth.demo.config.INumberConfig;
 import org.apache.commons.lang3.Validate;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
@@ -21,11 +21,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
+
 @Component
 public class BandwidthClient implements IBandwidthClient {
     private static final Logger LOG = LoggerFactory.getLogger(BandwidthClient.class);
 
-    private static final String BW_URL = "https://api.catapult.inetowrk.com/%s";
+    private static final String BW_URL = "https://api.catapult.inetwork.com/%s";
     private static final String BW_MSG_PATH = "v1/users/%s/messages";
 
     private final String apiKey;
@@ -34,6 +36,8 @@ public class BandwidthClient implements IBandwidthClient {
 
     private final String sourceDN;
     private final String destDN;
+
+    private final Set<Integer> acceptableCode = ImmutableSet.of(200, 201, 202);
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -73,10 +77,10 @@ public class BandwidthClient implements IBandwidthClient {
 
         try {
             final String apiData = objectMapper.writeValueAsString(smsData);
-            LOG.trace("apiData:\n{}", apiData);
+            LOG.info("apiData:\n{}", apiData);
 
             final String url = String.format(BW_URL, String.format(BW_MSG_PATH, apiKey));
-            LOG.trace("url: {}, url");
+            LOG.info("url: {}", url);
 
             final StringEntity entity = new StringEntity(apiData);
 
@@ -95,7 +99,7 @@ public class BandwidthClient implements IBandwidthClient {
 
             HttpResponse response = client.execute(httpPost);
 
-            if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+            if (!acceptableCode.contains(response.getStatusLine().getStatusCode())) {
                 LOG.error("Unable to post to SMS API: {}:{}", response.getStatusLine().getStatusCode(), response.getStatusLine().getReasonPhrase());
                 return false;
             }

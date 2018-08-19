@@ -7,9 +7,9 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @PropertySource("classpath:application.properties")
 public class NumberConfig implements INumberConfig {
-    @Value("number.sourceDN")
+    @Value("${number.sourceDN}")
     private String sourceDN;
-    @Value("number.destDN")
+    @Value("${number.destDN}")
     private String destDN;
 
     @Override
