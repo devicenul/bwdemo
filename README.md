@@ -33,8 +33,8 @@ Hardware used:
 - My desktop Windows 10 PC - development and test deployments
 - My SurfaceBook 2 - development
 - My two QNAP NAS boxes - Docker Station and final Run Environment
-- iPhone + BT Speakers - ambiance
-- HDTV + Rougue One: A Star Wars Story - sanity
+- iPhone + BT Speakers + AppleMusic - ambiance
+- HDTV + Xbox One + Rogue One: A Star Wars Story - sanity
 
 ## Postmortem
 ###### Or, what worked and what didn't?
@@ -70,10 +70,10 @@ is no testing to speak of.
 
 ## What did I learn?
 
-*Container Station:* I was ware the my NAS boxes supported some standard VM images via the QNAP Visualization Station 
-but had never used it running some of the 3rd party services I use on my servers as directly installed packages to save
+*Container Station:* I was aware the my NAS boxes supported running certain standard VM image formats via the QNAP Visualization 
+Station but had never used it, running all of the 3rd party services I use on my servers as directly installed packages to save
 on resources. I had not noticed that *Container Station* was an option until now. I will definitely consider using this 
-to migrate some of them to lighter-weight containers in the future.
+to migrate some of them to lighter-weight containers with environment isolation in the future.
 
 *Thymeleaf:* Doing most of me development in the past on protocols, system services, and back-ends, I had not really done
 much with UI. Since I needed a form to get user input and did not want to spend the time working through building a 
@@ -82,15 +82,17 @@ provided was very nice. I can using this in the future when prototyping back-end
 to it other than using raw HTTP via cURL or firing up something like Postman/Swagger.
 
 *Libphonenumber:* It had been a long time since I'd thought about validating phone numbers or converting formats. It was 
-nice to find a library to do some of the heaving lifting without resorting to potentially piles of regex.
+nice to find a library to do some of the heaving lifting without resorting to potentially piles of regex. It is possible this is
+also availble in the REST API or SDKs that Bandwidth provides and I just did not find it quickly enough.
 
-*dockerfile-maven-plugin:* I was familiar with using the io.fabric8 Maven plugin for building a Docker image that had
+*dockerfile-maven-plugin:* I was familiar with using a Maven plugin from io.fabric8 for building a Docker image that had
 been composed via a Dockerfile spec at work but I went looking to see what other alternatives were out there. I found
 this plugin from Spotify and it seems pretty capable. The only issue, previously mentioned, was figuring out how to get
 it to build/push against *Container Station* directly.
 
 *Bandwidth APIs:* I hesitate to say I learned a great deal about these. I only scratched the surface of what's available
-there but I was able to get a little feel for how it worked and would like to revisit it in time.
+there but I was able to get a little feel for how it worked and would like to revisit it in time now that I have a development
+base to play with.
 
 ## What next?
 
