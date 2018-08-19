@@ -22,6 +22,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		<docker.image.prefix>mercnet</docker.image.prefix>
 	</properties>
 
 	<dependencies>
@@ -62,12 +63,6 @@
 			<artifactId>swagger-annotations</artifactId>
 			<version>1.5.21</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/io.fabric8/docker-maven-plugin -->
-		<dependency>
-			<groupId>io.fabric8</groupId>
-			<artifactId>docker-maven-plugin</artifactId>
-			<version>0.14.1</version>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.googlecode.libphonenumber/libphonenumber -->
 		<dependency>
 			<groupId>com.googlecode.libphonenumber</groupId>
@@ -80,6 +75,12 @@
 			<artifactId>httpmime</artifactId>
 			<version>4.3.1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.collections/google-collections -->
+		<dependency>
+			<groupId>com.google.collections</groupId>
+			<artifactId>google-collections</artifactId>
+			<version>1.0</version>
+		</dependency>
 
 	</dependencies>
 
@@ -89,43 +90,42 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>copy-docker-resources</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target</outputDirectory>
+							<resources>
+								<!-- copy docker resources -->
+								<resource>
+									<directory>${project.basedir}/src/main/Docker</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.3.6</version>
+				<configuration>
+					<repository>${docker.image.prefix}/${project.artifactId}</repository>
+					<tag>latest</tag>
+					<buildArgs>
+						<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+					</buildArgs>
+					<contextDirectory>${project.basedir}/target</contextDirectory>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-
-	<profiles>
-		<profile>
-			<id>docker</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>io.fabric8</groupId>
-						<artifactId>docker-maven-plugin</artifactId>
-						<version>0.14.1</version>
-						<configuration>
-							<images>
-								<!-- A single's image configuration -->
-								<image>
-									<name>mercnet/bandwidthDemo</name>
-									<build>
-										<dockerFile>Dockerfile</dockerFile>
-										<dockerFileDir>${project.basedir}/src/main/docker/</dockerFileDir>
-										<assembly>
-											<descriptorRef>artifact-with-dependencies</descriptorRef>
-										</assembly>
-										<tags>
-											<tag>latest</tag>
-											<tag>8</tag>
-											<!--<tag>${java-rpm-tag.version}</tag>-->
-											<!--<tag>${maven.rpm.version}-${docker.build.tag}</tag>-->
-										</tags>
-									</build>
-								</image>
-							</images>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
-
 </project>
