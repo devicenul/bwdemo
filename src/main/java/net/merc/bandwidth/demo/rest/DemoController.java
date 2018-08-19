@@ -16,10 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class DemoController {
     private final static Logger LOG = LoggerFactory.getLogger(DemoController.class);
 
-    private final static String THANK_YOU = "Thank you!";
-    private final static String THANK_YOU_FOR_MESSAGE = "Thank you for your message!";
-    private final static String THANK_YOU_FOR_CALLING = "Thank you for calling! Trying now...";
-
     private final static String CANNED_MESSAGE = "Someone with this number tried the demo.";
 
     private final static PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
