@@ -16,6 +16,11 @@ import java.util.Date;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 
+/**
+ * Copyright (c) 2018, rrjefferson@gmail.com under the MIT license.
+ * See LICENSE.md for details.
+ */
+
 @EnableSwagger2
 @EnableWebMvc
 public class SwaggerConfiguration {

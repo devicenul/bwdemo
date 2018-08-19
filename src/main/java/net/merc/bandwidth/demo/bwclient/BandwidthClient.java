@@ -23,6 +23,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
+/**
+ * Copyright (c) 2018, rrjefferson@gmail.com under the MIT license.
+ * See LICENSE.md for details.
+ */
+
 @Component
 public class BandwidthClient implements IBandwidthClient {
     private static final Logger LOG = LoggerFactory.getLogger(BandwidthClient.class);

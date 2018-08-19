@@ -4,6 +4,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
+/**
+ * Copyright (c) 2018, rrjefferson@gmail.com under the MIT license.
+ * See LICENSE.md for details.
+ */
+
 @Configuration
 @PropertySource("classpath:application.properties")
 public class ApiConfig implements IApiConfig {
