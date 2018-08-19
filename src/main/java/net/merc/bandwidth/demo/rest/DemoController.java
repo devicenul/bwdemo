@@ -3,8 +3,11 @@ package net.merc.bandwidth.demo.rest;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 import io.swagger.annotations.Api;
+import net.merc.bandwidth.demo.bwclient.IBandwidthClient;
+import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,10 +21,17 @@ public class DemoController {
 
     private final static String CANNED_MESSAGE = "Someone with this number tried the demo.";
 
-    private final static PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
-    private final static String regionCode = PhoneNumberUtil.getInstance().getRegionCodeForCountryCode(1);
+    private final static PhoneNumberUtil PHONE_UTIL = PhoneNumberUtil.getInstance();
+    private final static String REGION_CODE = PhoneNumberUtil.getInstance().getRegionCodeForCountryCode(1);
 
-    public DemoController() {
+    private final IBandwidthClient bwClient;
+
+    @Autowired
+    public DemoController(final IBandwidthClient bwClient) {
+        Validate.notNull(bwClient);
+
+        this.bwClient = bwClient;
+
         LOG.info("Instantiated");
     }
 
@@ -71,8 +81,8 @@ public class DemoController {
         }
 
         try {
-            PhoneNumber phoneNumber = phoneUtil.parse(new StringBuffer(dn), regionCode);
-            return phoneUtil.isValidNumber(phoneNumber);
+            PhoneNumber phoneNumber = PHONE_UTIL.parse(new StringBuffer(dn), REGION_CODE);
+            return PHONE_UTIL.isValidNumber(phoneNumber);
         } catch (Exception e){
             LOG.error("Got exception parsing DN={}", dn, e);
             return false;
@@ -82,8 +92,8 @@ public class DemoController {
 
     private static String normalizeDN(final String dn) {
         try {
-            PhoneNumber phoneNumber = phoneUtil.parse(new StringBuffer(dn), regionCode);
-            return phoneUtil.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.E164);
+            PhoneNumber phoneNumber = PHONE_UTIL.parse(new StringBuffer(dn), REGION_CODE);
+            return PHONE_UTIL.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.E164);
         } catch (Exception e) {
             LOG.error("Got exception normalizing DN={}", dn, e);
             return dn;

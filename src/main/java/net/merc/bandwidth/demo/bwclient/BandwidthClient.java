@@ -22,7 +22,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BandwidthClient {
+public class BandwidthClient implements IBandwidthClient {
     private static final Logger LOG = LoggerFactory.getLogger(BandwidthClient.class);
 
     private static final String BW_URL = "https://api.catapult.inetowrk.com/%s";
@@ -59,6 +59,7 @@ public class BandwidthClient {
         LOG.info("Instantiated.");
     }
 
+    @Override
     public boolean submitSmsMessage(final String message) {
         if (message == null || message.isEmpty()) {
             LOG.debug("Message was empty.");
@@ -107,7 +108,9 @@ public class BandwidthClient {
         return true;
     }
 
-
-
-
+    @Override
+    public boolean submitCall(final String sourceDN) {
+        LOG.warn("submitCall not yet implemented");
+        return true;
+    }
 }
