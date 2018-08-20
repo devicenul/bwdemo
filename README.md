@@ -7,7 +7,7 @@ along with a few other bits of technology.
 
 ## What were the goals and constraints?
 
-The goal was to get a SpringBoot app up in a Docker container that would let them send me a message via SMS or make a 
+The goal was to get a SpringBoot app up in a Docker container that would let someone send me a message via SMS or make a 
 SIP phone call to me. The constraints were I had to do with equipment I had on-hand, software I could get for free (or
 very cheaply, i.e. the Bandwidth trial account), and I could only do it in the time I could carve out of a single weekend,
 starting on a Friday evening and finishing on Sunday.
