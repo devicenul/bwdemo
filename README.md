@@ -116,7 +116,7 @@ How do I set this up to reproduce it?
 4. Build and push the Docker image to your docker host
   - I am assuming you have your Docker environment setup
   - I did this from a Cygwin terminal in the root directory of my workspace:
-    - mvn package docker:build
-    - mvn package docker:push
+    - mvn package dockerfile:build
+    - mvn package dockerfile:push
 5. From there you can create a container in Docker for this image, be sure to expose port 8090 if you want to reach it from outside the Docker world.
 
