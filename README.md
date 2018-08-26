@@ -116,14 +116,14 @@ How do I set this up to reproduce it?
 
 1. Clone the repo and pull it into IntelliJ or your favorite IDE - I will assume you have that installed along with a version of JDK8 or higher.
 2. Edit the properties file src/main/resources/application.properties
-  - Add your API Key, User Name, and Password found in the your Bandwidth account dashboard under profile
-  - Add your Bandwidth DN as the sourceDN
-  - Add the target you want to send messages (and eventually calls) to in the destDN field.
+   - Add your API Key, User Name, and Password found in the your Bandwidth account dashboard under profile
+   - Add your Bandwidth DN as the sourceDN
+   - Add the target you want to send messages (and eventually calls) to in the destDN field.
 3. Build and run the Spring Boot application (by default it will be on localhost:8090/bandwidth/demo) and verify it works.
 4. Build and push the Docker image to your docker host
-  - I am assuming you have your Docker environment setup
-  - I did this from a Cygwin terminal in the root directory of my workspace:
-    - mvn package dockerfile:build
-    - mvn package dockerfile:push
+   - I am assuming you have your Docker environment setup
+   - I did this from a Cygwin terminal in the root directory of my workspace:
+     - mvn package dockerfile:build
+     - mvn package dockerfile:push
 5. From there you can create a container in Docker for this image, be sure to expose port 8090 if you want to reach it from outside the Docker world.
 
