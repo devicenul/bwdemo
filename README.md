@@ -94,10 +94,17 @@ it to build/push against *Container Station* directly.
 there but I was able to get a little feel for how it worked and would like to revisit it in time now that I have a development
 base to play with.
 
+*Spring Boot Starter:* I have used Spring and Spring Boot before but had always started from scratch and/or used some pre-selected 
+base Maven pom files that were the standard at work to pull the working set of dependencies. I tried using the web-based 
+starter this time to pull in what I needed or though I needed to start. It was interesting and to a degree less error prone way to 
+get a bunch of matching dependencies. I could see using it for prototypes and projects like this but I think the manually currated,
+shared base approach is still likely the best bet for business development by teams.
+
 ## What next?
 
 So what could be tried next?
 
+- [ ] Sending a multimedia payload (i.e. MMS)
 - [ ] Add more comments, logging, error handling.
 - [ ] Restrict source DNs to be a SIP URI for attempting calls.
 - [ ] Look into getting calling working potentially leveraging my Ooma Teleo or Astrisk on QNAP.
